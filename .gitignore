@@ -1,0 +1,4 @@
+Competition/data/*
+__pycache__/*
+Competition/RNN-based Baseline/Models/__pycache__/
+Competition/RNN-based Baseline/__pycache__/
