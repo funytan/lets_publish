@@ -15,7 +15,7 @@ class DataManager:
     def __init__(self):
         self.vocab = Vocabulary()
         self.ans = {}
-        for line in open("../data/train_answer.csv"):
+        for line in open("../data/train_data.txt"):
             line = line.strip().split(',')
             self.ans[line[0]] = int(line[1])
 
