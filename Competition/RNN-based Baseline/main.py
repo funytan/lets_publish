@@ -151,7 +151,10 @@ def valid(sess, model):
         caculate_result = caculate_acc(ori_labels, valid_result[1])
         acc_array += caculate_result[0]
         acc_blank += caculate_result[1]
+        print(caculate_result)
 
+    print(acc_array[0])
+    print(acc_array[1])
     acc = acc_array[0] / acc_array[1]
     acc_single = acc_blank[0, 0] / (acc_blank[0, 1] + 1e-12)
     acc_multi = acc_blank[1, 0] / (acc_blank[1, 1] + 1e-12)
@@ -205,6 +208,7 @@ def train(sess, model):
 
                     if model.global_step.eval() % 1000 == 0:
                         dev_acc, dev_loss = valid(sess, model)
+                        best_iter = 0
                         if dev_acc > best_dev_acc:
                             model.saver.save(sess, "%s/checkpoint" % train_dir, global_step=model.global_step)
                             best_dev_acc = dev_acc

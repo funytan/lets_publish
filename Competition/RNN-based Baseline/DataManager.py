@@ -8,6 +8,8 @@ import jieba
 import time
 from utils import Vocabulary
 
+import json
+
 random.seed(time.time())
 
 
@@ -16,8 +18,11 @@ class DataManager:
         self.vocab = Vocabulary()
         self.ans = {}
         for line in open("../data/train_data.txt"):
-            line = line.strip().split(',')
-            self.ans[line[0]] = int(line[1])
+            #line = line.strip().split(',')
+            #self.ans[line[0]] = int(line[1])
+
+            line_json = json.loads(line)
+            self.ans[line_json['content']] = int(line_json['realCount']) 
 
         print("*** Finish building vocabulary")
 
@@ -29,7 +34,9 @@ class DataManager:
 
 
     def _prepare_data(self, temp_data):
-        cans = temp_data["candidates"]
+        #print('temp_data')
+        #print(temp_data)
+        cans = temp_data["candidates"][0]
         cans = [self.vocab.tran2id(each, True) for each in cans]
 
         for text in temp_data["content"]:
@@ -55,10 +62,10 @@ class DataManager:
 
     def train(self, dev=False):
         if dev:
-            file = open("../data/train.txt")
+            file = open("../data/train_data.txt")
             lines = file.readlines()[:10000]
         else:
-            file = open("../data/train.txt")
+            file = open("../data/train_data.txt")
             lines = file.readlines()[10000:]
             random.shuffle(lines)
         for line in lines:

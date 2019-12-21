@@ -21,6 +21,7 @@ class Vocabulary:
 
 
     def tran2id(self, token, is_idiom=False):
+        #print(token)
         if is_idiom:
             return self.idiom2id[token]
         else:
